@@ -8,9 +8,16 @@ const Home = () => {
   const navigate = useNavigate();
   const responseGoogle = (response) => {
     console.log('response-------------------', response);
-    // if (response) {
-    //   navigate('/search');
-    // }
+    if (response) {
+      var data = {
+        first_name: response.profileObj.givenName,
+        last_name: response.profileObj.familyName,
+        email: response.profileObj.email,
+        token: response.accessToken,
+        imageUrl: response.profileObj.imageUrl,
+      };
+      console.log('data-----', data);
+    }
   };
 
   return (
