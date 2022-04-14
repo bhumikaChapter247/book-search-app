@@ -1,1 +1,3 @@
-// export * from './user';
+module.exports = {
+  User: require('./user'),
+};

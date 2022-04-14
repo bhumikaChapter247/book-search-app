@@ -8,7 +8,6 @@ const UserSchema = new Schema({
   imageUrl: { type: String, trim: true },
   created_at: { type: Date, default: Date.now },
 });
-console.log('inside model----');
 
 const User = mongoose.model('User', UserSchema);
 

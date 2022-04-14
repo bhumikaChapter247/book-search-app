@@ -1,12 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 const ViewBook = () => {
   const param = useParams();
   const [result, setResult] = useState([]);
-  console.log('param', param);
   useEffect(() => {
     getBookDetails();
     // eslint-disable-next-line
@@ -15,14 +13,12 @@ const ViewBook = () => {
     await axios
       .get(`https://www.googleapis.com/books/v1/volumes/${param.id}`)
       .then((res) => {
-        console.log('res-----', res);
         setResult(res.data);
       })
       .catch((err) => {
         throw err;
       });
   };
-  console.log('result----', result);
   const { volumeInfo } = result;
   // const
   return (

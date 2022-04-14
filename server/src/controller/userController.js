@@ -1,24 +1,31 @@
-const User = require('../models').User;
-console.log('User', User);
+const UserModel = require('../models').User;
 const socialSignup = async (req, res) => {
   const { first_name, last_name, email, token, imageUrl } = req.body;
   try {
-    let users = await User.findOne({
+    let users = await UserModel.findOne({
       where: { email: email },
     });
     if (!users) {
-      let result = await User.build({
+      let result = await UserModel.create({
         first_name: first_name,
         last_name: last_name,
         email: email,
         imageUrl: imageUrl,
-      }).save();
+      });
       users = result.dataValues;
-      res.json({ token: token, id: users.id });
+      res.json({
+        responseCode: 200,
+        data: { token: token, users: users },
+        message: 'Sign in sucessfully',
+      });
     }
-    res.json({ token: token, id: users.id });
+    res.json({
+      responseCode: 200,
+      data: { token: token, users: users },
+      message: 'Sign in sucessfully',
+    });
   } catch (error) {
-    res.json({ error: 'Something went wrong' });
+    res.json({ responseCode: 500, error: 'Something went wrong' });
   }
 };
 module.exports = { socialSignup };
