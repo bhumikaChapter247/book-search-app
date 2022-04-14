@@ -1,9 +1,12 @@
 const UserModel = require('../models').User;
+const SearchTitleModel = require('../models').SearchTitle;
+const ObjectId = require('mongodb').ObjectID;
+
 const socialSignup = async (req, res) => {
   const { first_name, last_name, email, token, imageUrl } = req.body;
   try {
     let users = await UserModel.findOne({
-      where: { email: email },
+      email: email,
     });
     if (!users) {
       let result = await UserModel.create({
@@ -13,19 +16,65 @@ const socialSignup = async (req, res) => {
         imageUrl: imageUrl,
       });
       users = result.dataValues;
-      res.json({
-        responseCode: 200,
+      return res.json({
+        code: 200,
         data: { token: token, users: users },
         message: 'Sign in sucessfully',
       });
     }
-    res.json({
-      responseCode: 200,
+    return res.json({
+      code: 200,
       data: { token: token, users: users },
       message: 'Sign in sucessfully',
     });
   } catch (error) {
-    res.json({ responseCode: 500, error: 'Something went wrong' });
+    return res.json({ code: 500, error: 'Something went wrong' });
   }
 };
-module.exports = { socialSignup };
+
+const saveSearchedTitles = async (req, res) => {
+  const { title, id } = req.body;
+  try {
+    let getTitle = await SearchTitleModel.findOne({
+      title: { $regex: title, $options: 'i' },
+    });
+    if (getTitle) {
+      console.log('getTitle', getTitle);
+      throw {
+        code: 400,
+        message: 'Title already exist',
+        success: false,
+      };
+    } else {
+      let result = await SearchTitleModel.create({
+        title: title,
+        user_id: ObjectId(id),
+      });
+      console.log('result', result);
+      return res.json({
+        code: 200,
+        data: { token: token, title: result },
+        message: 'Title saved',
+      });
+    }
+  } catch (error) {
+    return res.json({ code: 500, error: 'Something went wrong' });
+  }
+};
+
+const getSavedSearch = async (req, res) => {
+  //   console.log('inside getSavedSearch ');
+  try {
+    let result = await SearchTitleModel.find({
+      user_id: req.query.id,
+    });
+    return res.json({
+      code: 200,
+      data: result,
+      message: 'Searched titles',
+    });
+  } catch (error) {
+    return res.json({ code: 500, error: 'Something went wrong' });
+  }
+};
+module.exports = { socialSignup, saveSearchedTitles, getSavedSearch };

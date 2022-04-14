@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import './home.css';
 import GoogleLogin from 'react-google-login';
@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const Home = () => {
   const navigate = useNavigate();
+
   const responseGoogle = (response) => {
     if (response) {
       var data = {
@@ -19,14 +20,22 @@ const Home = () => {
       signup(data);
     }
   };
+  useEffect(() => {
+    let token = localStorage.getItem('token');
+    if (token) {
+      navigate('/search');
+    }
+  }, []);
   const signup = async (data) => {
     await axios
       .post('http://localhost:5000/api/user/signup', data)
       .then((response) => {
         if (response.data.data) {
           let token = response.data?.data?.token;
+          let id = response.data?.data?.users?._id;
           if (token) {
             localStorage.setItem('token', token);
+            localStorage.setItem('id', id);
             navigate('/search');
           } else {
             navigate('/');
@@ -35,6 +44,7 @@ const Home = () => {
       })
       .catch((error) => {});
   };
+
   return (
     <div className='Login'>
       <h3>Welcome to Book Search App</h3>
@@ -47,7 +57,7 @@ const Home = () => {
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={'single_host_origin'}
-          isSignedIn={true}
+          // isSignedIn={true}
         />
       </Form>
     </div>

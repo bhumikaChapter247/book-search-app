@@ -1,32 +1,67 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SearchResult from './SearchResult';
-import { Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
   const [results, setResult] = useState([]);
+  const [savedTitles, setsavedTitles] = useState([]);
   const [title, setTitle] = useState('');
+  useEffect(() => {
+    getSavedSearch();
+    // eslint-disable-next-line
+  }, []);
+
   const handleInputChange = (event) => {
     const { value } = event.target;
     setTitle(value);
   };
-
-  const handleFormSubmit = (event) => {
+  const getSavedSearch = async () => {
+    await axios
+      .get(
+        `http://localhost:5000/api/user/savedtitles?id=${localStorage.getItem(
+          'id'
+        )}`
+      )
+      .then(async (res) => {
+        setsavedTitles(res.data.data);
+      })
+      .catch(async (err) => {});
+  };
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    axios
+    await axios
       .get(`https://www.googleapis.com/books/v1/volumes?q=${title}`)
-      .then((res) => {
+      .then(async (res) => {
         setResult(res.data.items);
+        await axios
+          .post('http://localhost:5000/api/user/savedsearch', {
+            title: title,
+            id: localStorage.getItem('id'),
+          })
+          .then(async (res) => {})
+          .catch(async (err) => {});
       })
       .catch((err) => {
         throw err;
       });
   };
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
+    navigate('/');
+  };
+  console.log('savedTitles', savedTitles);
   return (
     <div>
       <div className='jumbotron jumbotron-fluid bg-secondary text-white'>
         <span className='display-2'>Google Book Search</span>
         <span className='lead'>Find your favorite books</span>
+        <Button className='float-right' onClick={logout}>
+          Logout
+        </Button>
       </div>
       <div className='container'>
         <Form onSubmit={handleFormSubmit}>
@@ -39,6 +74,18 @@ const Home = () => {
               value={title}
               onChange={handleInputChange}
             ></input>
+            {/* <div>
+              {savedTitles?.length
+                ? savedTitles.map((item) => {
+                    return (
+                      <span key={item.id}>
+                        {item.title}
+                        <br />
+                      </span>
+                    );
+                  })
+                : null}
+            </div> */}
             <br />
             <button className='btn btn-block btn-primary' type='submit'>
               {' '}
