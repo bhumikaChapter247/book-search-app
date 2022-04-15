@@ -21,6 +21,8 @@ app.use('/api', routes);
 app.listen(PORT, () => {
   console.log(`Server has started at ${PORT} !`);
 });
+
+// Database connection
 mongoose.connect(
   process.env.DATABASE_URL || 'mongodb://localhost/googlebooks',
   { useUnifiedTopology: true, useNewUrlParser: true },

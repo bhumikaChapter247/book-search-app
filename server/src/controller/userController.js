@@ -2,6 +2,7 @@ const UserModel = require('../models').User;
 const SearchTitleModel = require('../models').SearchTitle;
 const ObjectId = require('mongodb').ObjectID;
 
+// ============ API for social signup =========================
 const socialSignup = async (req, res) => {
   const { first_name, last_name, email, token, imageUrl } = req.body;
   try {
@@ -32,6 +33,7 @@ const socialSignup = async (req, res) => {
   }
 };
 
+// =============== API for saving searched titles =============
 const saveSearchedTitles = async (req, res) => {
   const { title, id } = req.body;
   try {
@@ -39,7 +41,6 @@ const saveSearchedTitles = async (req, res) => {
       title: { $regex: title, $options: 'i' },
     });
     if (getTitle) {
-      console.log('getTitle', getTitle);
       throw {
         code: 400,
         message: 'Title already exist',
@@ -50,7 +51,6 @@ const saveSearchedTitles = async (req, res) => {
         title: title,
         user_id: ObjectId(id),
       });
-      console.log('result', result);
       return res.json({
         code: 200,
         data: { token: token, title: result },
@@ -62,6 +62,7 @@ const saveSearchedTitles = async (req, res) => {
   }
 };
 
+// =============== API to get searched titles ================
 const getSavedSearch = async (req, res) => {
   //   console.log('inside getSavedSearch ');
   try {

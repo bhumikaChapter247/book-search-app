@@ -4,10 +4,14 @@ import './home.css';
 import GoogleLogin from 'react-google-login';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AppRoutes from '../config/appRoutes';
+import { AppConfig } from '../config/appConfig';
+import ApiRoutes from '../config/apiRoutes';
 
 const Home = () => {
   const navigate = useNavigate();
 
+  // function to get google response
   const responseGoogle = (response) => {
     if (response) {
       var data = {
@@ -20,25 +24,31 @@ const Home = () => {
       signup(data);
     }
   };
+
   useEffect(() => {
+    // if token exists it will redirect to search page
     let token = localStorage.getItem('token');
     if (token) {
-      navigate('/search');
+      navigate(AppRoutes.SEARCH);
     }
+    // eslint-disable-next-line
   }, []);
+
+  // api to signup user
   const signup = async (data) => {
     await axios
-      .post('http://localhost:5000/api/user/signup', data)
+      .post(`${AppConfig.API_ENDPOINT}${ApiRoutes.soacialSignup}`, data)
       .then((response) => {
         if (response.data.data) {
           let token = response.data?.data?.token;
           let id = response.data?.data?.users?._id;
           if (token) {
+            // set token and id in local storage
             localStorage.setItem('token', token);
             localStorage.setItem('id', id);
-            navigate('/search');
+            navigate(AppRoutes.SEARCH);
           } else {
-            navigate('/');
+            navigate(AppRoutes.MAIN);
           }
         }
       })
@@ -57,7 +67,6 @@ const Home = () => {
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={'single_host_origin'}
-          // isSignedIn={true}
         />
       </Form>
     </div>

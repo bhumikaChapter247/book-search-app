@@ -1,6 +1,6 @@
-.App {
-  text-align: center;
-}
+    /* .App {
+      text-align: center;
+    } */
 
 .App-logo {
   height: 40vmin;
@@ -38,4 +38,33 @@
 }
 .font-size-15{
   font-size: 15px;
+}
+.text-wrapper{
+  text-align: center;
+  justify-content: space-between;
+  padding: 1rem !important;
+  font-size: 1rem !important;
+}
+
+.display-2{
+  /* padding: 1rem !important; */
+  font-size: 2rem !important;
+}
+form-control{
+  width: 50% !important;
+}
+.search-card{
+  padding: 5rem 8rem 2rem 8rem;
+    background-color: gainsboro;
+    border-radius: 10px;
+}
+.form-wrapper{
+  padding: 0rem 4rem !important;
+}
+.book-text{
+  padding: 3rem !important;
+  text-align: center;
+}
+.col-wrapper .col-4{
+  text-align: center;
 }

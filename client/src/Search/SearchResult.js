@@ -1,12 +1,16 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import AppRoutes from '../config/appRoutes';
 
 const SearchResult = ({ title, id, author, image, description }) => {
   const navigate = useNavigate();
+
+  // redirect to book details page
   const viewBook = (id) => {
-    navigate(`/book/${id}`);
+    navigate(AppRoutes.DETAILS.replace(':id', id));
   };
+  
   return (
     <div id='result-card'>
       <br />
@@ -33,7 +37,7 @@ const SearchResult = ({ title, id, author, image, description }) => {
           <img src={image} alt={title} />
         </div>
         <div className='col-9'>
-          <p className='lead'>Description: </p>
+          <p className='head'>Description: </p>
           <span
             dangerouslySetInnerHTML={{
               __html: description,
