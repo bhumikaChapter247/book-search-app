@@ -1,6 +1,4 @@
-    /* .App {
-      text-align: center;
-    } */
+@import '~font-awesome/css/font-awesome.min.css';
 
 .App-logo {
   height: 40vmin;
@@ -38,6 +36,7 @@
 }
 .font-size-15{
   font-size: 15px;
+  font-weight: bold;
 }
 .text-wrapper{
   text-align: center;
@@ -68,3 +67,13 @@ form-control{
 .col-wrapper .col-4{
   text-align: center;
 }
+.link{
+  color: blue;
+}
+.loader{
+  position: absolute;
+  top: 46%;
+  left: 46%;
+  color: #3e6efd;
+  font-size: 40px;
+}    

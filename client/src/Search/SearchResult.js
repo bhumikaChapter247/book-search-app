@@ -10,7 +10,7 @@ const SearchResult = ({ title, id, author, image, description }) => {
   const viewBook = (id) => {
     navigate(AppRoutes.DETAILS.replace(':id', id));
   };
-  
+
   return (
     <div id='result-card'>
       <br />
@@ -26,7 +26,9 @@ const SearchResult = ({ title, id, author, image, description }) => {
           </small>
         </div>
         <span className='col-3 offset-6'>
-          <Button onClick={() => viewBook(id)}>View</Button>
+          <Button onClick={() => viewBook(id)}>
+            <i className='fa fa-eye' /> View
+          </Button>
         </span>
       </div>
       <div className='row'>

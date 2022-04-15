@@ -5,24 +5,16 @@ import { Form } from 'react-bootstrap';
 import ApiRoutes from '../config/apiRoutes';
 import { AppConfig } from '../config/appConfig';
 import Header from '../Header';
-import AppRoutes from '../config/appRoutes';
-import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [results, setResult] = useState([]);
   const [savedTitles, setsavedTitles] = useState([]);
   const [title, setTitle] = useState('');
   let user_id = localStorage.getItem('id');
-  const navigate = useNavigate();
-
   useEffect(() => {
     getSavedSearch();
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    // eslint-disable-next-line
-  }, [title]);
 
   const handleInputChange = (event) => {
     const { value } = event.target;
@@ -39,12 +31,8 @@ const Home = () => {
       .catch(async (err) => {});
   };
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    getSavedSearch();
-    console.log(savedTitles);
-    navigate(`${AppRoutes.SEARCH}?title=${title}`);
-    // Get book from google search
+  // Get book from google search
+  const searchBooks = async () => {
     await axios
       .get(`${ApiRoutes.googleSearchBooks}?q=${title}`)
       .then(async (res) => {
@@ -60,6 +48,14 @@ const Home = () => {
       .catch((err) => {
         throw err;
       });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    getSavedSearch();
+    console.log(savedTitles);
+    // navigate(`${AppRoutes.SEARCH}?title=${title}`);
+    searchBooks();
   };
 
   return (
@@ -83,8 +79,7 @@ const Home = () => {
               ></input>
               <br />
               <button className='btn btn-block btn-primary' type='submit'>
-                {' '}
-                Search
+                <i className='fa fa-search' /> Search
               </button>
             </div>
           </Form>

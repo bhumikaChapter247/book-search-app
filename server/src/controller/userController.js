@@ -64,7 +64,6 @@ const saveSearchedTitles = async (req, res) => {
 
 // =============== API to get searched titles ================
 const getSavedSearch = async (req, res) => {
-  //   console.log('inside getSavedSearch ');
   try {
     let result = await SearchTitleModel.find({
       user_id: req.query.id,
