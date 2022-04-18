@@ -53,7 +53,7 @@ const Search = () => {
   const handleFormSubmit = async (event:any) => {
     event.preventDefault();
     getSavedSearch();
-    console.log(savedTitles);
+    // console.log(savedTitles);
     // navigate(`${AppRoutes.SEARCH}?title=${title}`);
     searchBooks();
   };

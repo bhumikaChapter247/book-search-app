@@ -65,7 +65,7 @@ const ViewBook = () => {
             </div>
             <div className='col-9'>
               <p className='head font-size-15'>Description: </p>
-              {volumeInfo.description ? (
+              {volumeInfo && volumeInfo.description ? (
                 <span
                   dangerouslySetInnerHTML={{
                     __html: volumeInfo?.description,
