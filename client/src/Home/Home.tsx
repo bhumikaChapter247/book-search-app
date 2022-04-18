@@ -12,7 +12,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   // function to get google response
-  const responseGoogle = (response) => {
+  const responseGoogle = (response:any) => {
     if (response) {
       var data = {
         first_name: response?.profileObj?.givenName,
@@ -35,7 +35,7 @@ const Home = () => {
   }, []);
 
   // api to signup user
-  const signup = async (data) => {
+  const signup = async (data:any) => {
     await axios
       .post(`${AppConfig.API_ENDPOINT}${ApiRoutes.soacialSignup}`, data)
       .then((response) => {

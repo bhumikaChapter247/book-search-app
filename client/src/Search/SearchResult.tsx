@@ -3,11 +3,19 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AppRoutes from '../config/appRoutes';
 
-const SearchResult = ({ title, id, author, image, description }) => {
+export interface ISearchProps{
+  title: string
+  id: number
+  author: string
+  description: string
+  image:string
+}
+
+const SearchResult : React.FunctionComponent<ISearchProps>= ({ title, id, author, image, description }) => {
   const navigate = useNavigate();
 
   // redirect to book details page
-  const viewBook = (id) => {
+  const viewBook = (id:number| string|any) => {
     navigate(AppRoutes.DETAILS.replace(':id', id));
   };
 

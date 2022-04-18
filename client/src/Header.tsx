@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AppRoutes from './config/appRoutes';
 
-const Header = () => {
+const Header= () => {
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
   const logout = () => {
@@ -18,7 +18,7 @@ const Header = () => {
     }
     // eslint-disable-next-line
   }, []);
-  return (
+  return (   
     <div className='jumbotron jumbotron-fluid bg-secondary text-white d-flex text-wrapper'>
       <h4 className='display-2'>
         <i className='fa fa-book' /> Google Book Search
@@ -27,7 +27,8 @@ const Header = () => {
         <i className='fa fa-sign-out' />
         Logout
       </Button>
-    </div>
+</div>
+ 
   );
 };
 export default Header;

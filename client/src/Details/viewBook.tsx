@@ -7,8 +7,8 @@ import Header from '../Header';
 
 const ViewBook = () => {
   const param = useParams();
-  const [result, setResult] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [result, setResult] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   useEffect(() => {

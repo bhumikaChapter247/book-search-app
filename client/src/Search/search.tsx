@@ -6,17 +6,17 @@ import ApiRoutes from '../config/apiRoutes';
 import { AppConfig } from '../config/appConfig';
 import Header from '../Header';
 
-const Home = () => {
-  const [results, setResult] = useState([]);
-  const [savedTitles, setsavedTitles] = useState([]);
-  const [title, setTitle] = useState('');
+const Search = () => {
+  const [results, setResult] = useState<any[]>([]);
+  const [savedTitles, setsavedTitles] = useState<any[]>([]);
+  const [title, setTitle] = useState<string>('');
   let user_id = localStorage.getItem('id');
   useEffect(() => {
     getSavedSearch();
     // eslint-disable-next-line
   }, []);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event:any) => {
     const { value } = event.target;
     setTitle(value);
   };
@@ -50,7 +50,7 @@ const Home = () => {
       });
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async (event:any) => {
     event.preventDefault();
     getSavedSearch();
     console.log(savedTitles);
@@ -96,11 +96,11 @@ const Home = () => {
                     key={id}
                     title={title}
                     id={id}
-                    link={infoLink}
+                    // link={infoLink}
                     author={authors}
                     image={imageLinks?.thumbnail}
                     description={description}
-                    results={results}
+                    // results={results}
                   />
                 );
               })
@@ -110,4 +110,4 @@ const Home = () => {
     </div>
   );
 };
-export default Home;
+export default Search;
