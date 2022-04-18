@@ -15,11 +15,11 @@ const Home = () => {
   const responseGoogle = (response) => {
     if (response) {
       var data = {
-        first_name: response.profileObj.givenName,
-        last_name: response.profileObj.familyName,
-        email: response.profileObj.email,
-        token: response.accessToken,
-        imageUrl: response.profileObj.imageUrl,
+        first_name: response?.profileObj?.givenName,
+        last_name: response?.profileObj?.familyName,
+        email: response?.profileObj?.email,
+        token: response?.accessToken,
+        imageUrl: response?.profileObj?.imageUrl,
       };
       signup(data);
     }

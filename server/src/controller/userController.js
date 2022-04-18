@@ -16,10 +16,9 @@ const socialSignup = async (req, res) => {
         email: email,
         imageUrl: imageUrl,
       });
-      users = result.dataValues;
       return res.json({
         code: 200,
-        data: { token: token, users: users },
+        data: { token: token, users: result },
         message: 'Sign in sucessfully',
       });
     }
@@ -29,7 +28,7 @@ const socialSignup = async (req, res) => {
       message: 'Sign in sucessfully',
     });
   } catch (error) {
-    return res.json({ code: 500, error: 'Something went wrong' });
+    return res.json({ code: 500, error: 'Something went wrong', error: error });
   }
 };
 
@@ -58,7 +57,7 @@ const saveSearchedTitles = async (req, res) => {
       });
     }
   } catch (error) {
-    return res.json({ code: 500, error: 'Something went wrong' });
+    return res.json({ code: 500, error: 'Something went wrong', error: error });
   }
 };
 
@@ -74,7 +73,7 @@ const getSavedSearch = async (req, res) => {
       message: 'Searched titles',
     });
   } catch (error) {
-    return res.json({ code: 500, error: 'Something went wrong' });
+    return res.json({ code: 500, error: 'Something went wrong', error: error });
   }
 };
 module.exports = { socialSignup, saveSearchedTitles, getSavedSearch };
