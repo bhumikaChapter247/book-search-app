@@ -15,7 +15,7 @@ import { Request, Response } from 'express';
  * @apiParam {String} email Email of the User.
  * @apiParam {String} token token of the User.
  * @apiParam {String} imageUrl Image of the User.
- * @apiParamExample {Object} Request-Example:
+ * @apiSuccess {String} title Title of the article.
  * @apiSuccessExample {json} Success
  * HTTP/1.1 200 OK
 * {
@@ -69,7 +69,7 @@ const socialSignup = async (req:Request, res:Response) => {
  * @apiDescription Save user searched titles
  * @apiParam {String} Title of the book.
  * @apiParam {Integer} id  Id of the User.
- * @apiParamExample {Object} Request-Example:
+ * @apiSuccess {String} title Title of the article.
  * @apiSuccessExample {json} Success
  * HTTP/1.1 200 OK
 * {
@@ -122,7 +122,8 @@ const saveSearchedTitles = async (req:Request, res:Response) => {
  * @apiGroup Frontend
  * @apiPermission user
  * @apiParam {Integer} user_id Id of user.
- * @apiDescription To fetch user searched title details 
+ * @apiDescription To fetch user searched title details
+ * @apiSuccess {String} title Title of the article. 
  * @apiSuccessExample {json} Success
  * HTTP/1.1 200 OK
  * {
