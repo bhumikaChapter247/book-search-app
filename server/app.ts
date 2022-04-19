@@ -1,19 +1,18 @@
-const express = require('express');
-const mongoose = require('mongoose'); // new
-const PORT = process.env.PORT || 5000;
-const routes = require('./src/routes/apiRoutes');
-const cors = require('cors');
+import express from 'express';
+import mongoose ,{ ConnectOptions } from 'mongoose'; // new
+import cors from 'cors';
 require('dotenv');
+const routes = require('./src/routes/apiRoutes') ;
+const PORT:string|number= process.env.PORT || 5000;
 
-const uri =
-  'mongodb+srv://bhumika:1sQ53VgRVNQfAKn2@book-search-db.6mj1n.mongodb.net/googlebooks?retryWrites=true&w=majority';
+const uri:string=process.env.DATABASE_URI||'mongodb+srv://bhumika:1sQ53VgRVNQfAKn2@book-search-db.6mj1n.mongodb.net/googlebooks?retryWrites=true&w=majority';
 
-const app = express();
+const app:any = express();
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 /* -------------------------------------------- Alow origin ------------------------------------------- */
-var corsOption = {
+var corsOption:Object = {
   origin: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
@@ -28,7 +27,7 @@ app.listen(PORT, () => {
 // Database connection
 mongoose.connect(
   uri,
-  { useUnifiedTopology: true, useNewUrlParser: true },
+  { useUnifiedTopology: true, useNewUrlParser: true } as ConnectOptions,
   (err) => {
     if (err) {
       console.error('Connection to DB failed');

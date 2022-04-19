@@ -1,5 +1,5 @@
-const Mongoose = require('mongoose');
-const Schema = Mongoose.Schema;
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema;
 
 const SearchTitleSchema = new Schema({
   user_id: Schema.Types.ObjectId,
@@ -7,6 +7,6 @@ const SearchTitleSchema = new Schema({
   created_at: { type: Date, default: Date.now },
 });
 
-const SearchTitles = Mongoose.model('searchedTitle', SearchTitleSchema);
+const SearchTitles = mongoose.model('searchedTitle', SearchTitleSchema);
 
 module.exports = SearchTitles;

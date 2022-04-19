@@ -1,5 +1,5 @@
-const expresss = require('express');
-const router = expresss.Router();
+import express from 'express'
+const router = express.Router();
 const { user } = require('./index');
 
 router.use('/user', user);

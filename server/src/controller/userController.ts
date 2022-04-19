@@ -1,6 +1,7 @@
 const UserModel = require('../models').User;
 const SearchTitleModel = require('../models').SearchTitle;
 const ObjectId = require('mongodb').ObjectID;
+import { Request, Response } from 'express';
 
 // ============ API for social signup =========================
 /**
@@ -30,14 +31,14 @@ const ObjectId = require('mongodb').ObjectID;
  *}
  *    HTTP/1.1 500 Internal Server Error
  */
-const socialSignup = async (req:any, res:any) => {
-  const { first_name, last_name, email, token, imageUrl } = req.body;
+const socialSignup = async (req:Request, res:Response) => {
+  const { first_name, last_name, email, token, imageUrl }:any = req.body;
   try {
-    let users = await UserModel.findOne({
+    let users:Object = await UserModel.findOne({
       email: email,
     });
     if (!users) {
-      let result = await UserModel.create({
+      let result:Object = await UserModel.create({
         first_name: first_name,
         last_name: last_name,
         email: email,
@@ -85,10 +86,10 @@ const socialSignup = async (req:any, res:any) => {
  * }
  *    HTTP/1.1 500 Internal Server Error
  */
-const saveSearchedTitles = async (req:any, res:any) => {
-  const { title, id } = req.body;
+const saveSearchedTitles = async (req:Request, res:Response) => {
+  const { title, id }:any = req.body;
   try {
-    let getTitle = await SearchTitleModel.findOne({
+    let getTitle :Object = await SearchTitleModel.findOne({
       title: { $regex: title, $options: 'i' },
     });
     if (getTitle) {
@@ -98,7 +99,7 @@ const saveSearchedTitles = async (req:any, res:any) => {
         success: false,
       };
     } else {
-      let result = await SearchTitleModel.create({
+      let result:Object = await SearchTitleModel.create({
         title: title,
         user_id: ObjectId(id),
       });
@@ -132,9 +133,9 @@ const saveSearchedTitles = async (req:any, res:any) => {
  * @apiErrorExample {json}  error
  *    HTTP/1.1 500 Internal Server Error
  */
-const getSavedSearch = async (req:any, res:any) => {
+const getSavedSearch = async (req:Request, res:Response) => {
   try {
-    let result = await SearchTitleModel.find({
+    let result:any[] = await SearchTitleModel.find({
       user_id: req.query.id,
     });
     return res.json({

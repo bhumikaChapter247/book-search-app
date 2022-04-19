@@ -1,5 +1,5 @@
-const Mongoosee = require('mongoose');
-const schema = Mongoosee.Schema;
+import mongoose from 'mongoose';
+const schema = mongoose.Schema;
 
 const UserSchema = new schema({
   first_name: { type: String, required: true },
@@ -9,6 +9,6 @@ const UserSchema = new schema({
   created_at: { type: Date, default: Date.now },
 });
 
-const User = Mongoosee.model('User', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
 module.exports = User;
